@@ -443,7 +443,7 @@ function JSDEV(source, tags, comments) {
                 }
             } else {
 
-// The character was nothing special, to just echo it.
+// The character was nothing special, so just echo it.
 // If it wasn't whitespace, remember it as the character to the left of the
 // next character.
 
