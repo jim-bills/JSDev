@@ -1,6 +1,6 @@
 // jsdev.js
 // Douglas Crockford
-// 2013-09-22
+// 2015-02-25
 //
 // Public Domain
 //
@@ -112,10 +112,14 @@ function JSDEV(source, tags, comments) {
 // Return true if the character is a letter, digit, underscore,
 // dollar sign, or period.
 
-        return ((c >= 'a' && c <= 'z') ||
-                (c >= '0' && c <= '9') ||
-                (c >= 'A' && c <= 'Z') ||
-                 c === '_' || c === '$' || c === '.');
+        return (
+            (c >= 'a' && c <= 'z') ||
+            (c >= '0' && c <= '9') ||
+            (c >= 'A' && c <= 'Z') ||
+            c === '_' || 
+            c === '$' || 
+            c === '.'
+        );
     }
 
 
@@ -183,7 +187,7 @@ function JSDEV(source, tags, comments) {
 
     function string(quote, in_comment) {
         var c, was = line_nr;
-        for (;;) {
+        while (true) {
             c = get(true);
             if (c === quote) {
                 return;
@@ -212,10 +216,10 @@ function JSDEV(source, tags, comments) {
 
     function regexp(in_comment) {
         var c, was = line_nr;
-        for (;;) {
+        while (true) {
             c = get(true);
             if (c === '[') {
-                for (;;) {
+                while (true) {
                     c = get(true);
                     if (c === ']') {
                         break;
@@ -251,7 +255,7 @@ function JSDEV(source, tags, comments) {
 
     function condition() {
         var c, left = '{', paren = 0;
-        for (;;) {
+        while (true) {
             c = get(true);
             if (c === '(' || c === '{' || c === '[') {
                 paren += 1;
@@ -286,7 +290,7 @@ function JSDEV(source, tags, comments) {
         while (peek() === ' ') {
             get(false);
         }
-        for (;;) {
+        while (true) {
             while (peek() === '*') {
                 get(false);
                 if (peek() === '/') {
@@ -351,7 +355,7 @@ function JSDEV(source, tags, comments) {
 // Loop through the program text, looking for patterns.
 
         var c = get(false), i, left = 0, tag;
-        for (;;) {
+        while (true) {
             if (c === null) {
                 break;
             }
@@ -370,7 +374,7 @@ function JSDEV(source, tags, comments) {
 
                 if (peek() === '/') {
                     emit('/');
-                    for (;;) {
+                    while (true) {
                         c = get(true);
                         if (c === '\n' || c === '\r' || c === null) {
                             break;
@@ -384,7 +388,7 @@ function JSDEV(source, tags, comments) {
                     if (peek() === '*') {
                         get(false);
                         tag = '';
-                        for (;;) {
+                        while (true) {
                             c = get(false);
                             if (!is_alphanum(c)) {
                                 break;
@@ -395,7 +399,9 @@ function JSDEV(source, tags, comments) {
 
 //  Did the tag matches something?
 
-                        i = !tag ? -1 : tags.indexOf(tag);
+                        i = !tag 
+                        ? -1 
+                        : tags.indexOf(tag);
                         if (i >= 0) {
                             expand(i);
                             c = get(false);
@@ -405,7 +411,7 @@ function JSDEV(source, tags, comments) {
 
                             emit("/*");
                             emit(tag);
-                            for (;;) {
+                            while (true) {
                                 if (c === null) {
                                     error("unterminated comment.");
                                 }
