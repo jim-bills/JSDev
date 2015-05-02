@@ -1,6 +1,6 @@
 // jsdev.js
 // Douglas Crockford
-// 2015-02-25
+// 2015-05-02
 //
 // Public Domain
 //
@@ -400,8 +400,8 @@ function JSDEV(source, tags, comments) {
 //  Did the tag matches something?
 
                         i = !tag 
-                        ? -1 
-                        : tags.indexOf(tag);
+                            ? -1 
+                            : tags.indexOf(tag);
                         if (i >= 0) {
                             expand(i);
                             c = get(false);
