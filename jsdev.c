@@ -459,7 +459,9 @@ process()
 /*
     Did the tag match something?
 */
-                    i = i == 0 ? -1 : match();
+                    i = (i == 0)
+                        ? -1
+                        : match();
                     if (i >= 0) {
                         expand(i);
                         c = get(FALSE);
@@ -493,7 +495,7 @@ process()
                     emit('/');
 /*
     We are looking at a single slash. Is it a division operator, or is it the
-    start of a regexp literal? If is not possible to tell for sure without doing
+    start of a regexp literal? It is not possible to tell for sure without doing
     a complete parse of the program, and we are not going to do that. Instead,
     we are adopting the convention that a regexp literal must have one of a
     small set of characters to its left.
@@ -507,7 +509,7 @@ process()
             }
         } else {
 /*
-    The character was nothing special, to just echo it.
+    The character was nothing special, so just echo it.
     If it wasn't whitespace, remember it as the character to the left of the
     next character.
 */

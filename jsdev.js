@@ -1,6 +1,6 @@
 // jsdev.js
 // Douglas Crockford
-// 2015-05-02
+// 2015-11-05
 //
 // Public Domain
 //
@@ -50,13 +50,13 @@
 //
 //     if (<condition>) {<method>(<stuff>);}
 //
-// The JSDEV function takes a program text (either a string or an array of
+// The jsdev function takes a program text (either a string or an array of
 // string), an array of tag strings, and optionally, an array of comment
 // strings.
 //
 // Sample invocation:
 //
-//     output = JSDEV(source, [
+//     output = jsdev(source, [
 //         "debug", "log:console.log", "alarm:alert"
 //     ], "Devel Edition");
 //
@@ -90,7 +90,7 @@
 //
 // at the top of the output file.
 
-function JSDEV(source, tags, comments) {
+function jsdev(source, tags, comments) {
     'use strict';
 
     var line,
@@ -116,8 +116,8 @@ function JSDEV(source, tags, comments) {
             (c >= 'a' && c <= 'z') ||
             (c >= '0' && c <= '9') ||
             (c >= 'A' && c <= 'Z') ||
-            c === '_' || 
-            c === '$' || 
+            c === '_' ||
+            c === '$' ||
             c === '.'
         );
     }
@@ -399,8 +399,8 @@ function JSDEV(source, tags, comments) {
 
 //  Did the tag matches something?
 
-                        i = !tag 
-                            ? -1 
+                        i = (!tag)
+                            ? -1
                             : tags.indexOf(tag);
                         if (i >= 0) {
                             expand(i);
@@ -435,7 +435,7 @@ function JSDEV(source, tags, comments) {
                         emit('/');
 
 // We are looking at a single slash. Is it a division operator, or is it the
-// start of a regexp literal? If is not possible to tell for sure without doing
+// start of a regexp literal? It is not possible to tell for sure without doing
 // a complete parse of the program, and we are not going to do that. Instead,
 // we are adopting the convention that a regexp literal must have one of a
 // small set of characters to its left.
