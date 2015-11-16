@@ -50,7 +50,7 @@
 
         if (<condition>) {<method>(<stuff>);}
 
-    Also, a method line can contain a comment.
+    A command line can contain a comment.
 
         -comment <comment>
 

@@ -1,6 +1,6 @@
 // jsdev.js
 // Douglas Crockford
-// 2015-11-05
+// 2015-11-16
 //
 // Public Domain
 //
@@ -16,7 +16,7 @@
 //     /*<tag> <stuff>*/
 //     /*<tag>(<condition>) <stuff>*/
 //
-// The command line will contain a list of <tag> names, each of which can
+// The jsdev function is called with an array of <tag> names, each of which can
 // optionally be followed by a colon and <method> name. There must not be
 // any spaces around the colon.
 //
@@ -51,7 +51,7 @@
 //     if (<condition>) {<method>(<stuff>);}
 //
 // The jsdev function takes a program text (either a string or an array of
-// string), an array of tag strings, and optionally, an array of comment
+// strings), an array of tag strings, and optionally, an array of comment
 // strings.
 //
 // Sample invocation:
@@ -504,3 +504,5 @@ function jsdev(source, tags, comments) {
     process();
     return outputs.join('');
 }
+
+/*node module.exports = jsdev;*/

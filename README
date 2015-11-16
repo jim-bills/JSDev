@@ -34,8 +34,8 @@ as
     */
 
 JSDev is given a list of the names of the tags that should be activated.
-Also, methods can be defined by following the tag name with : and a method
-name. There can be no spaces around the :.
+Methods can be defined by following the tag name with : and a method name. 
+There can be no spaces around the :.
 
     Replacement     /*<tag>         */
 
@@ -55,11 +55,12 @@ exception if there is an error.
 
 C command line example:
 
-    jsdev -comment "Devel Edition." <input >output test_expose enter:trace.enter exit:trace.exit unless:alert
+    jsdev -comment "Devel Edition." <input >output node test_expose enter:trace.enter exit:trace.exit unless:alert
 
 JavaScript:
 
     output = jsdev(input, [
+        "node",
         "test_expose",
         "enter:trace.enter",
         "exit:trace.exit",
@@ -88,6 +89,9 @@ input:
         /*exit "Constructor"*/
     }
 
+    /*node module.exports = Constructor;*/
+
+
 output:
 
     // Devel Edition.
@@ -110,6 +114,9 @@ output:
         }
         {trace.exit("Constructor");}
     }
+
+    module.exports = Constructor;
+
 
 lightly minified:
 
