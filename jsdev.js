@@ -1,6 +1,6 @@
 // jsdev.js
 // Douglas Crockford
-// 2015-11-16
+// 2016-01-13
 //
 // Public Domain
 //
@@ -93,17 +93,19 @@
 function jsdev(source, tags, comments) {
     'use strict';
 
-    var line,
-        line_nr = -1,
-        lines,
-        methods,
-        outputs = [],
-        preview,
-        tagx = /^([0-9A-Za-z_$.]+)(?::([0-9A-Za-z_$.]+))?$/;
+    var line;
+    var line_nr = -1;
+    var lines;
+    var methods;
+    var outputs = [];
+    var preview;
+    var tagx = /^([0-9A-Za-z_$.]+)(?::([0-9A-Za-z_$.]+))?$/;
 
 
     function error(message) {
-        throw new Error("JSDev: " + ((line_nr + 1) || "bad tag") + ' ' + message);
+        throw new Error(
+            "JSDev: " + ((line_nr + 1) || "bad tag") + ' ' + message
+        );
     }
 
 
@@ -186,7 +188,8 @@ function jsdev(source, tags, comments) {
 
 
     function string(quote, in_comment) {
-        var c, was = line_nr;
+        var c;
+        var was = line_nr;
         while (true) {
             c = get(true);
             if (c === quote) {
@@ -207,15 +210,17 @@ function jsdev(source, tags, comments) {
 
 
     function pre_regexp(left) {
-        return (left === '(' || left === ',' || left === '=' ||
-                left === ':' || left === '[' || left === '!' ||
-                left === '&' || left === '|' || left === '?' ||
-                left === '{' || left === '}' || left === ';');
+        return (
+            left === '(' || left === ',' || left === '=' || left === ':' ||
+            left === '[' || left === '!' || left === '&' || left === '|' ||
+            left === '?' || left === '{' || left === '}' || left === ';'
+        );
     }
 
 
     function regexp(in_comment) {
-        var c, was = line_nr;
+        var c;
+        var was = line_nr;
         while (true) {
             c = get(true);
             if (c === '[') {
@@ -254,7 +259,9 @@ function jsdev(source, tags, comments) {
 
 
     function condition() {
-        var c, left = '{', paren = 0;
+        var c;
+        var left = '{';
+        var paren = 0;
         while (true) {
             c = get(true);
             if (c === '(' || c === '{' || c === '[') {
@@ -286,7 +293,8 @@ function jsdev(source, tags, comments) {
 
 
     function stuff() {
-        var c, left = '{', paren = 0;
+        var c;
+        var left = '{', paren = 0;
         while (peek() === ' ') {
             get(false);
         }
@@ -354,7 +362,10 @@ function jsdev(source, tags, comments) {
 
 // Loop through the program text, looking for patterns.
 
-        var c = get(false), i, left = 0, tag;
+        var c = get(false);
+        var i;
+        var left = 0;
+        var tag;
         while (true) {
             if (c === null) {
                 break;
