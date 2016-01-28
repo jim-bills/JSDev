@@ -1,6 +1,6 @@
 // jsdev.js
 // Douglas Crockford
-// 2016-01-13
+// 2016-01-27
 //
 // Public Domain
 //
@@ -294,7 +294,8 @@ function jsdev(source, tags, comments) {
 
     function stuff() {
         var c;
-        var left = '{', paren = 0;
+        var left = '{';
+        var paren = 0;
         while (peek() === ' ') {
             get(false);
         }
