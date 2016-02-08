@@ -1,6 +1,6 @@
 // jsdev.js
 // Douglas Crockford
-// 2016-01-27
+// 2016-02-07
 //
 // Public Domain
 //
@@ -91,7 +91,7 @@
 // at the top of the output file.
 
 function jsdev(source, tags, comments) {
-    'use strict';
+    "use strict";
 
     var line;
     var line_nr = -1;
@@ -104,7 +104,7 @@ function jsdev(source, tags, comments) {
 
     function error(message) {
         throw new Error(
-            "JSDev: " + ((line_nr + 1) || "bad tag") + ' ' + message
+            "JSDev: " + ((line_nr + 1) || "bad tag") + " " + message
         );
     }
 
@@ -115,12 +115,12 @@ function jsdev(source, tags, comments) {
 // dollar sign, or period.
 
         return (
-            (c >= 'a' && c <= 'z') ||
-            (c >= '0' && c <= '9') ||
-            (c >= 'A' && c <= 'Z') ||
-            c === '_' ||
-            c === '$' ||
-            c === '.'
+            (c >= "a" && c <= "z") ||
+            (c >= "0" && c <= "9") ||
+            (c >= "A" && c <= "Z") ||
+            c === "_" ||
+            c === "$" ||
+            c === "."
         );
     }
 
@@ -144,15 +144,15 @@ function jsdev(source, tags, comments) {
             preview = null;
         } else {
             if (!line) {
-                if (typeof line === 'string') {
-                    c = '\n';
+                if (typeof line === "string") {
+                    c = "\n";
                     line = null;
                 } else {
                     line_nr += 1;
                     line = lines[line_nr];
                     if (!line) {
-                        if (typeof line === 'string') {
-                            c = '\n';
+                        if (typeof line === "string") {
+                            c = "\n";
                             line = null;
                         } else {
                             c = null;
@@ -195,10 +195,10 @@ function jsdev(source, tags, comments) {
             if (c === quote) {
                 return;
             }
-            if (c === '\\') {
+            if (c === "\\") {
                 c = get(true);
             }
-            if (in_comment && c === '*' && peek() === '/') {
+            if (in_comment && c === "*" && peek() === "/") {
                 error("unexpected close comment in string.");
             }
             if (c === null) {
@@ -211,9 +211,9 @@ function jsdev(source, tags, comments) {
 
     function pre_regexp(left) {
         return (
-            left === '(' || left === ',' || left === '=' || left === ':' ||
-            left === '[' || left === '!' || left === '&' || left === '|' ||
-            left === '?' || left === '{' || left === '}' || left === ';'
+            left === "(" || left === "," || left === "=" || left === ":" ||
+            left === "[" || left === "!" || left === "&" || left === "|" ||
+            left === "?" || left === "{" || left === "}" || left === ";"
         );
     }
 
@@ -223,31 +223,31 @@ function jsdev(source, tags, comments) {
         var was = line_nr;
         while (true) {
             c = get(true);
-            if (c === '[') {
+            if (c === "[") {
                 while (true) {
                     c = get(true);
-                    if (c === ']') {
+                    if (c === "]") {
                         break;
                     }
-                    if (c === '\\') {
+                    if (c === "\\") {
                         c = get(true);
                     }
-                    if (in_comment && c === '*' && peek() === '/') {
+                    if (in_comment && c === "*" && peek() === "/") {
                         error("unexpected close comment in regexp.");
                     }
                     if (c === null) {
                         error("unterminated set in Regular Expression literal.");
                     }
                 }
-            } else if (c === '\\') {
+            } else if (c === "\\") {
                 c = get(true);
-            } else if (c === '/') {
-                if (in_comment && (peek() === '/' || peek() === '*')) {
+            } else if (c === "/") {
+                if (in_comment && (peek() === "/" || peek() === "*")) {
                     error("unexpected comment.");
                 }
                 return;
             }
-            if (in_comment && c === '*' && peek() === '/') {
+            if (in_comment && c === "*" && peek() === "/") {
                 error("unexpected comment.");
             }
             if (c === null) {
@@ -260,32 +260,32 @@ function jsdev(source, tags, comments) {
 
     function condition() {
         var c;
-        var left = '{';
+        var left = "{";
         var paren = 0;
         while (true) {
             c = get(true);
-            if (c === '(' || c === '{' || c === '[') {
+            if (c === "(" || c === "{" || c === "[") {
                 paren += 1;
-            } else if (c === ')' || c === '}' || c === ']') {
+            } else if (c === ")" || c === "}" || c === "]") {
                 paren -= 1;
                 if (paren === 0) {
                     return;
                 }
             } else if (c === null) {
                 error("Unterminated condition.");
-            } else if (c === '\'' || c === '"' || c === '`') {
+            } else if (c === "'" || c === "\"" || c === "`") {
                 string(c, true);
-            } else if (c === '/') {
-                if (peek() === '/' || peek() === '*') {
+            } else if (c === "/") {
+                if (peek() === "/" || peek() === "*") {
                     error("unexpected comment.");
                 }
                 if (pre_regexp(left)) {
                     regexp(true);
                 }
-            } else if (c === '*' && peek() === '/') {
+            } else if (c === "*" && peek() === "/") {
                 error("unclosed condition.");
             }
-            if (c > ' ') {
+            if (c > " ") {
                 left = c;
             }
         }
@@ -294,44 +294,44 @@ function jsdev(source, tags, comments) {
 
     function stuff() {
         var c;
-        var left = '{';
+        var left = "{";
         var paren = 0;
-        while (peek() === ' ') {
+        while (peek() === " ") {
             get(false);
         }
         while (true) {
-            while (peek() === '*') {
+            while (peek() === "*") {
                 get(false);
-                if (peek() === '/') {
+                if (peek() === "/") {
                     get(false);
                     if (paren > 0) {
                         error("Unbalanced stuff");
                     }
                     return;
                 }
-                emit('*');
+                emit("*");
             }
             c = get(true);
             if (c === null) {
                 error("Unterminated stuff.");
-            } else if (c === '\'' || c === '"' || c === '`') {
+            } else if (c === "'" || c === "\"" || c === "`") {
                 string(c, true);
-            } else if (c === '(' || c === '{' || c === '[') {
+            } else if (c === "(" || c === "{" || c === "[") {
                 paren += 1;
-            } else if (c === ')' || c === '}' || c === ']') {
+            } else if (c === ")" || c === "}" || c === "]") {
                 paren -= 1;
                 if (paren < 0) {
                     error("Unbalanced stuff");
                 }
-            } else if (c === '/') {
-                if (peek() === '/' || peek() === '*') {
+            } else if (c === "/") {
+                if (peek() === "/" || peek() === "*") {
                     error("unexpected comment.");
                 }
                 if (pre_regexp(left)) {
                     regexp(true);
                 }
             }
-            if (c > ' ') {
+            if (c > " ") {
                 left = c;
             }
         }
@@ -342,19 +342,19 @@ function jsdev(source, tags, comments) {
         var c;
 
         c = peek();
-        if (c === '(') {
+        if (c === "(") {
             emit("if ");
             condition();
-            emit(' ');
+            emit(" ");
         }
-        emit('{');
+        emit("{");
         if (methods[tag_nr]) {
-            emit(methods[tag_nr] + '(');
+            emit(methods[tag_nr] + "(");
             stuff();
             emit(");}");
         } else {
             stuff();
-            emit('}');
+            emit("}");
         }
     }
 
@@ -371,7 +371,7 @@ function jsdev(source, tags, comments) {
             if (c === null) {
                 break;
             }
-            if (c === '\'' || c === '"' || c === '`') {
+            if (c === "'" || c === "\"" || c === "`") {
                 emit(c);
                 string(c, false);
                 c = 0;
@@ -380,15 +380,15 @@ function jsdev(source, tags, comments) {
 // literal or a line comment or a block comment. A block comment can also be
 // a pattern to be expanded.
 
-            } else if (c === '/') {
+            } else if (c === "/") {
 
 //  A slash slash comment skips to the end of the file.
 
-                if (peek() === '/') {
-                    emit('/');
+                if (peek() === "/") {
+                    emit("/");
                     while (true) {
                         c = get(true);
-                        if (c === '\n' || c === '\r' || c === null) {
+                        if (c === "\n" || c === "\r" || c === null) {
                             break;
                         }
                     }
@@ -397,9 +397,9 @@ function jsdev(source, tags, comments) {
 //  The first component of a slash star comment might be the tag.
 
                 } else {
-                    if (peek() === '*') {
+                    if (peek() === "*") {
                         get(false);
-                        tag = '';
+                        tag = "";
                         while (true) {
                             c = get(false);
                             if (!is_alphanum(c)) {
@@ -427,14 +427,14 @@ function jsdev(source, tags, comments) {
                                 if (c === null) {
                                     error("unterminated comment.");
                                 }
-                                if (c === '/') {
+                                if (c === "/") {
                                     c = get(true);
-                                    if (c === '*') {
+                                    if (c === "*") {
                                         error("nested comment.");
                                     }
-                                } else if (c === '*') {
+                                } else if (c === "*") {
                                     c = get(true);
-                                    if (c === '/') {
+                                    if (c === "/") {
                                         break;
                                     }
                                 } else {
@@ -444,7 +444,7 @@ function jsdev(source, tags, comments) {
                             c = get(false);
                         }
                     } else {
-                        emit('/');
+                        emit("/");
 
 // We are looking at a single slash. Is it a division operator, or is it the
 // start of a regexp literal? It is not possible to tell for sure without doing
@@ -455,7 +455,7 @@ function jsdev(source, tags, comments) {
                         if (pre_regexp(left)) {
                             regexp(false);
                         }
-                        left = '/';
+                        left = "/";
                         c = get(false);
                     }
                 }
@@ -466,7 +466,7 @@ function jsdev(source, tags, comments) {
 // next character.
 
                 emit(c);
-                if (c > ' ') {
+                if (c > " ") {
                     left = c;
                 }
                 c = get(false);
@@ -478,7 +478,7 @@ function jsdev(source, tags, comments) {
 // Begin. If there is a comments argument, then make each string into a
 // comment at the top of the output.
 
-    if (typeof comments === 'string') {
+    if (typeof comments === "string") {
         emit("// " + comments + "\n");
     } else if (Array.isArray(comments)) {
         comments.forEach(function (value) {
@@ -505,7 +505,7 @@ function jsdev(source, tags, comments) {
 
 // If the source is a string, bust it into lines.
 
-    if (typeof source === 'string') {
+    if (typeof source === "string") {
         lines = source.split(/\n|\r\n?/);
     } else {
         lines = source;
@@ -514,7 +514,7 @@ function jsdev(source, tags, comments) {
 // Process the stuff, and return the output as a string.
 
     process();
-    return outputs.join('');
+    return outputs.join("");
 }
 
 /*node module.exports = jsdev;*/
