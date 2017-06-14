@@ -1,6 +1,6 @@
 /*  jsdev.c
     Douglas Crockford
-    2013-09-22
+    2017-06-12
 
     Public Domain
 
@@ -133,10 +133,14 @@ is_alphanum(int c)
     Return TRUE if the character is a letter, digit, underscore,
     dollar sign, or period.
 */
-    return ((c >= 'a' && c <= 'z') ||
-            (c >= '0' && c <= '9') ||
-            (c >= 'A' && c <= 'Z') ||
-             c == '_' || c == '$' || c == '.');
+    return (
+        (c >= 'a' && c <= 'z')
+        || (c >= '0' && c <= '9')
+        || (c >= 'A' && c <= 'Z')
+        || c == '_'
+        || c == '$'
+        || c == '.'
+    );
 }
 
 
@@ -241,10 +245,11 @@ string(int quote, int in_comment)
 static int
 pre_regexp(int left)
 {
-    return (left == '(' || left == ',' || left == '=' ||
-            left == ':' || left == '[' || left == '!' ||
-            left == '&' || left == '|' || left == '?' ||
-            left == '{' || left == '}' || left == ';');
+    return (
+        left == '(' || left == ',' || left == '=' || left == ':'
+        || left == '[' || left == '!' || left == '&' || left == '|'
+        || left == '?' || left == '{' || left == '}' || left == ';'
+    );
 }
 
 

@@ -1,6 +1,6 @@
-// jsdev.js
+||// jsdev.js
 // Douglas Crockford
-// 2016-02-07
+// 2017-06-12
 //
 // Public Domain
 //
@@ -211,9 +211,9 @@ function jsdev(source, tags, comments) {
 
     function pre_regexp(left) {
         return (
-            left === "(" || left === "," || left === "=" || left === ":" ||
-            left === "[" || left === "!" || left === "&" || left === "|" ||
-            left === "?" || left === "{" || left === "}" || left === ";"
+            left === "(" || left === "," || left === "=" || left === ":"
+            || left === "[" || left === "!" || left === "&" || left === "|"
+            || left === "?" || left === "{" || left === "}" || left === ";"
         );
     }
 
