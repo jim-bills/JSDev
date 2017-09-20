@@ -4,7 +4,7 @@ JSDev, A JavaScript Development Tool
 Douglas Crockford
 douglas@crockford.com
 
-2015-11-05
+2017-09-19
 
 JSDev is a filter that activates selected comments, making them executable.
 This makes it possible to put development, performance, and testing scaffolding
@@ -34,7 +34,7 @@ as
     */
 
 JSDev is given a list of the names of the tags that should be activated.
-Methods can be defined by following the tag name with : and a method name. 
+Methods can be defined by following the tag name with : and a method name.
 There can be no spaces around the :.
 
     Replacement     /*<tag>         */
@@ -72,19 +72,19 @@ input:
     // This is a sample file.
 
     function Constructor(number) {
-        /*enter 'Constructor'*/
-        /*unless(typeof number !== 'number') 'number', "Type error"*/
+        /*enter "Constructor"*/
+        /*unless(typeof number !== "number") "number", "Type error"*/
         function private_method() {
-            /*enter 'private_method'*/
-            /*exit 'private_method'*/
+            /*enter "private_method"*/
+            /*exit "private_method"*/
         }
         /*test_expose
             this.private_method = private_method;
         */
         this.priv = function () {
-            /*enter 'priv'*/
+            /*enter "priv"*/
             private_method();
-            /*exit 'priv'*/
+            /*exit "priv"*/
         }
         /*exit "Constructor"*/
     }
@@ -98,19 +98,19 @@ output:
     // This is a sample file.
 
     function Constructor(number) {
-        {trace.enter('Constructor');}
-        if (typeof number !== 'number') {alert('number', "Type error");}
+        {trace.enter("Constructor");}
+        if (typeof number !== "number") {alert("number", "Type error");}
         function private_method() {
-            {trace.enter('private_method');}
-            {trace.exit('private_method');}
+            {trace.enter("private_method");}
+            {trace.exit("private_method");}
         }
         {
             this.private_method = private_method;
         }
         this.priv = function () {
-            {trace.enter('priv');}
+            {trace.enter("priv");}
             private_method();
-            {trace.exit('priv');}
+            {trace.exit("priv");}
         }
         {trace.exit("Constructor");}
     }
