@@ -4,7 +4,7 @@ JSDev, A JavaScript Development Tool
 Douglas Crockford
 douglas@crockford.com
 
-2017-09-19
+2017-09-20
 
 JSDev is a filter that activates selected comments, making them executable.
 This makes it possible to put development, performance, and testing scaffolding
@@ -55,17 +55,23 @@ exception if there is an error.
 
 C command line example:
 
-    jsdev -comment "Devel Edition." <input >output node test_expose enter:trace.enter exit:trace.exit unless:alert
+    jsdev -comment "Devel Edition." <input >output node test_expose
+        enter:trace.enter exit:trace.exit unless:alert
 
-JavaScript:
+JavaScript example:
 
-    output = jsdev(input, [
-        "node",
-        "test_expose",
-        "enter:trace.enter",
-        "exit:trace.exit",
-        "unless:alert"
-    ] , ["Devel Edition."]);
+    import from "./jsdev.js";
+    let output = jsdev(
+        input,
+        [
+            "node",
+            "test_expose",
+            "enter:trace.enter",
+            "exit:trace.exit",
+            "unless:alert"
+        ] ,
+        ["Devel Edition."]
+    );
 
 input:
 
@@ -118,7 +124,7 @@ output:
     module.exports = Constructor;
 
 
-lightly minified:
+input, lightly minified:
 
     function Constructor(number) {
         function private_method() {
